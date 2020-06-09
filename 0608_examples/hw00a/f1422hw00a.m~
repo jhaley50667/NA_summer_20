@@ -1,0 +1,12 @@
+function [stu,z] = f1422hw00a(p,q)
+%function returns z = p/q
+%inputs:
+%   p,q  - real numbers
+%   s    - integer, student id
+%output:
+%   z    - real number
+
+s = 1422;
+z = p/q;
+end
+
