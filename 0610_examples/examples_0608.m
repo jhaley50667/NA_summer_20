@@ -24,7 +24,7 @@ clear b
 who
 
 %build a small matrix by hand
-M = [1,3;2,4]  %[m11,m12,m21,m22]
+M = [1,3;2,4]  %[m11,m12;m21,m22]
 
 %scalar times a matrix
 3*M
@@ -53,14 +53,15 @@ size(N)
 %Make a random matrix
 R = rand(5,6)
 
+
 %Lets make some loops to add up all the numbers in the matrix R
 [n,m] = size(R);
 s = 0;
 %right click on the following block and choose "smart indent"
 for i = 1:n
-for j = 1:m
-s = s + R(i,j);
-end
+    for j = 1:m
+        s = s + R(i,j);
+    end
 end
 
 %what is our answer?
@@ -86,4 +87,3 @@ y = exp(x);
 %plot and label the axes
 plot(x,y)
 xlabel('x')
-ylabel('y = exp(x)')
