@@ -1,4 +1,3 @@
-
 function [results] = grade_homeworks(list, varargin)
 % function [results] = homeworks(prefix, answer)
 % returns evaluations of programming assignments
@@ -14,8 +13,7 @@ format shortG
 p = 2;
 q = 3;
 answer = p/q;
-tol = 1e-12;
-
+tol = 1e-12
 %%%% run the functions
 for i = 1:6
     fprintf('************** \n')
@@ -65,8 +63,8 @@ for i = 1:length(list)
     fprintf('*************** \n')
     for j = 1:length(d)
         score = 0;
-        if list(i).sid == evals(j,1)
-            fprintf('student_id: %d, match found\n',list(i).sid)
+        if list(i).SISUserID== evals(j,1)
+            fprintf('student_id: %d, match found\n',list(i).SISUserID)
             fprintf('Relative error: %0.5f \n',evals(j,2));
             if abs(evals(j,2)) < tol
                 score = 4;
@@ -90,10 +88,10 @@ for i = 1:length(list)
         
     end
     if score == 0
-        fprintf('Student_id: %d , No matching file found \n\n',list(i).sid)
+        fprintf('Student_id: %d , No matching file found \n\n',list(i).SISUserID)
         fprintf('score = %d \n',score)
         %% windows
-        findstr_id = sprintf('findstr %d *.m',list(i).sid);
+        findstr_id = sprintf('findstr %d *.m',list(i).SISUserID);
         [~,cmdout] = system(findstr_id);
         fprintf('findstr finds : %s \n',cmdout);
         %% linux
@@ -110,7 +108,7 @@ fprintf('\n\n******************************\n')
 fprintf('***** Printing Grades ********\n\n')
 fprintf('student_id,name,score\n')
 for i = 1:length(list)
-    fprintf('%d,%s,%0.1f\n',list(i).sid,list(i).name,list(i).score)
+    fprintf('%d,%s,%0.1f\n',list(i).SISUserID,list(i).Student,list(i).score)
 end
 
 results = list;

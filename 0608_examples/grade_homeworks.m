@@ -9,12 +9,17 @@ function [results] = grade_homeworks(list, varargin)
 % output:
 %   results  - struct with results of evaluating the functions
 
+
+os = 1;
 %%%% input and expected answer
 format shortG
-p = 2;
-q = 3;
-answer = p/q;
-tol = 1e-12;
+%solve ax^2+bx+c=0
+a=2;
+b=5;
+c=-3;
+answer = [-3,0.5];
+tol = 1e-12
+
 
 %%%% run the functions
 for i = 1:6
@@ -32,20 +37,23 @@ for i = 1:length(d)
     fstr = d(i).name(1:end-2);
     try
         tic
-        [u,v] = feval(fstr,p,q);
+        [s,r1,r2] = feval(fstr,a,b,c);
+        v = [r1,r2];
         timings(i,1) = toc;
-        evals(i,1) = u;
-        evals(i,2) = abs(abs(v-answer)/answer);
+        evals(i,1) = s;
+        evals(i,2) = norm(v-answer)/norm(answer);
+
     catch
         warning('Function Problem, i = %d, function = %s',i,fstr)
         evals(i,2) = -100;
         timings(i,1) = -100;
     end
     %% check for commenting
-    %% windows
-    comment_str = sprintf('findstr %s %s','%',d(i).name);
-    %% linux
-%    comment_str = sprintf('grep %s %s','%',d(i).name);
+    if os == 0   %% windows
+        comment_str = sprintf('findstr %s %s','%',d(i).name);
+    else   %% linux
+        comment_str = sprintf('grep %s %s','%',d(i).name);
+    end
     check_comments = ~system(comment_str);
     if  check_comments > 0
         fprintf('Comments found \n')
@@ -65,41 +73,46 @@ for i = 1:length(list)
     fprintf('*************** \n')
     for j = 1:length(d)
         score = 0;
-        if list(i).sid == evals(j,1)
-            fprintf('student_id: %d, match found\n',list(i).sid)
+        if list(i).SISUserID == evals(j,1)
+            fprintf('student_id: %d, match found\n',list(i).SISUserID)
             fprintf('Relative error: %0.5f \n',evals(j,2));
             if abs(evals(j,2)) < tol
                 score = 4;
             else
                 score = 1; %input('Enter assignment score:  ')
             end
-            if  comments(i,1) == 0
+            if  comments(j,1) == 0
                 score = score - 0.5;
                 fprintf('Deduction for missing comments \n')
             end
             fprintf('score = %d \n',score)
             if rand < 0.7
-                %% windows
-                 look_str = sprintf('notepad++ %s',d(j).name);
-                %% linux
-%                 look_str = sprintf('gedit %s',d(j).name);
-%                system(look_str);
+                if os == 0
+                    look_str = sprintf('notepad++ %s',d(j).name);
+                    %% linux
+                else
+                    look_str = sprintf('gedit %s',d(j).name);
+                end
+                %                system(look_str);
             end
             break
         end
         
     end
     if score == 0
-        fprintf('Student_id: %d , No matching file found \n\n',list(i).sid)
+        fprintf('Student_id: %d , No matching file found \n\n',list(i).SISUserID)
         fprintf('score = %d \n',score)
         %% windows
-        findstr_id = sprintf('findstr %d *.m',list(i).sid);
-        [~,cmdout] = system(findstr_id);
-        fprintf('findstr finds : %s \n',cmdout);
-        %% linux
-%         grep_id = sprintf('grep %d *.m',list(i).sid);
-%         [~,cmdout] = system(grep_id);
-%         fprintf('grep finds : %s \n',cmdout)
+        if os == 0
+            findstr_id = sprintf('findstr %d *.m',list(i).SISUserID);
+            [~,cmdout] = system(findstr_id);
+            fprintf('findstr finds : %s \n',cmdout);
+        else
+            %% linux
+            grep_id = sprintf('grep %d *.m',list(i).SISUserID);
+            [~,cmdout] = system(grep_id);
+            fprintf('grep finds : %s \n',cmdout)
+        end
     end
     list(i).score = score;
 end  %for i
@@ -110,7 +123,7 @@ fprintf('\n\n******************************\n')
 fprintf('***** Printing Grades ********\n\n')
 fprintf('student_id,name,score\n')
 for i = 1:length(list)
-    fprintf('%d,%s,%0.1f\n',list(i).sid,list(i).name,list(i).score)
+    fprintf('%d,%s,%0.1f\n',list(i).SISUserID,list(i).Student,list(i).score)
 end
 
 results = list;
