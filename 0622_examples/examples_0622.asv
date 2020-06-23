@@ -9,5 +9,19 @@ xa = 0.6666641;
 %backward error |f(xa)|
 abs(f(xa))
 
-%what is machi
+%what is machine epsilon?
 eps
+
+%forward error, |xa - r|, r = 2/3
+abs(xa-2/3)
+
+%%%% example with f(x) = sin(x) -x 
+f = @(x) sin(x)-x;
+xa = 0.001;
+
+%backwards error
+abs(f(xa))
+
+%forward error |xa - r|
+abs(xa-0)
+

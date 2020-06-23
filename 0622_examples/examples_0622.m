@@ -17,3 +17,11 @@ abs(xa-2/3)
 
 %%%% example with f(x) = sin(x) -x 
 f = @(x) sin(x)-x;
+xa = 0.001;
+
+%backwards error
+abs(f(xa))
+
+%forward error |xa - r|
+abs(xa-0)
+
