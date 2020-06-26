@@ -3,7 +3,7 @@
 %Input: inline function f; a,b such that f(a)*f(b)<0, 
 %     and tolerance tol
 %Output: Approximate solution xc
-function c_vect = bisect(f,a,b,tol,max_steps)
+function c_vect = hw02a(f,a,b,tol,max_steps)
 if sign(f(a))*sign(f(b)) >= 0
   error('f(a)f(b)<0 not satisfied!') %ceases execution
 end
@@ -23,6 +23,10 @@ while (b-a)/2>tol & k<= max_steps
     a=c;fa=fc;
   end
   k = k+1;
+end
+%print exit staement if max_steps reached
+if k >= max_steps
+    fprintf('Max steps reached');
 end
 
 xc=(a+b)/2;               %new midpoint is best estimate

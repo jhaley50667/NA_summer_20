@@ -9,5 +9,8 @@ function x = newt(f,f_prime,x0,n)
 x(1) = x0;
 for i =1:n
     x(i+1) = x(i) - f(x(i))/f_prime(x(i));
+    if (i > 1) && (x(i+1) == x(i-1))
+        x(i+1) = x(i+1) -0.1;
+    end
 end % for i
 end %program
