@@ -41,9 +41,9 @@ for i = 1:length(d)
     end
     %% check for commenting
     %% windows
-    comment_str = sprintf('findstr %s %s','%',d(i).name);
+    %comment_str = sprintf('findstr %s %s','%',d(i).name);
     %% linux
-%    comment_str = sprintf('grep %s %s','%',d(i).name);
+    comment_str = sprintf('grep %s %s','%',d(i).name);
     check_comments = ~system(comment_str);
     if  check_comments > 0
         fprintf('Comments found \n')
@@ -91,13 +91,13 @@ for i = 1:length(list)
         fprintf('Student_id: %d , No matching file found \n\n',list(i).SISUserID)
         fprintf('score = %d \n',score)
         %% windows
-        findstr_id = sprintf('findstr %d *.m',list(i).SISUserID);
-        [~,cmdout] = system(findstr_id);
-        fprintf('findstr finds : %s \n',cmdout);
+%         findstr_id = sprintf('findstr %d *.m',list(i).SISUserID);
+%         [~,cmdout] = system(findstr_id);
+%        fprintf('findstr finds : %s \n',cmdout);
         %% linux
-%         grep_id = sprintf('grep %d *.m',list(i).sid);
-%         [~,cmdout] = system(grep_id);
-%         fprintf('grep finds : %s \n',cmdout)
+        grep_id = sprintf('grep %d *.m',list(i).SISUserID);
+        [~,cmdout] = system(grep_id);
+        fprintf('grep finds : %s \n',cmdout)
     end
     list(i).score = score;
 end  %for i
