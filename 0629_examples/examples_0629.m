@@ -2,6 +2,7 @@
 
 %Solve Ax=b with random data
 
+
 % define a 4x4 matrix with random numbers
 A = rand(4)
 
@@ -59,7 +60,7 @@ fwd_err/bwd_err
 
 %%%%  Condition Number %%%%
 %cond(A) = ||A||_inf||A^(-1)||_inf
-A = [1 1;1.0001 1];
+A = [1,1;1.0001,1];
 
 A_norm = norm(A,Inf)
 A_inv_norm = norm(inv(A),Inf)
@@ -75,7 +76,7 @@ A = ones(3)
 
 cond(A)
 %That's pretty bad, let's make it a bit better
-A(1,1) = A(1,1)+1e-6;
+A(1,1) = A(1,1)+1e-6
 cond(A)
 
 A(2,2) = A(2,2)+1e-6
