@@ -1,9 +1,9 @@
-function rename_functions()
+function op_sys = rename_functions()
 
 d = dir('*.m');
 
 %windows: os = 0, linux: os = 1
-os = 1;
+os = input('Enter 0 for windows, 1 for linux :  ');
 %folder for copying to
 if ~exist('renamed','dir')
     fprintf('Creating folder for renamed functions\n')
@@ -28,6 +28,6 @@ for i = 1:length(d)
         %fprintf('old: %s new: %s\n',old_name,new_name)
     end
 end
-
+op_sys = os;
 end
 
